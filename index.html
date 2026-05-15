@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dr. Mattea Müller — Computational Precision Nutrition</title>
+<meta name="description" content="Dr. Mattea Müller — Researcher in Computational Precision Nutrition, Multi-Omics, Microbiome & Metabolome. Junior Research Group Leader at PLRI (TU Braunschweig & MHH)." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F4EFE6;
+    --bg-soft: #ECE5D6;
+    --ink: #1A1A18;
+    --ink-soft: #4A4A45;
+    --ink-mute: #8A8579;
+    --line: #C9C0AE;
+    --moss: #34503A;
+    --moss-deep: #20331F;
+    --rust: #B85C38;
+    --paper: #FBF8F1;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--moss);color:var(--paper)}
+
+  /* Grain overlay */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    pointer-events:none;
+    opacity:.35;
+    z-index:100;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.05 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;
+    z-index:50;
+    padding:18px 40px;
+    display:flex;justify-content:space-between;align-items:center;
+    backdrop-filter:blur(8px);
+    background:rgba(244,239,230,.7);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s;
+  }
+  nav.scrolled{border-bottom-color:var(--line)}
+  nav .brand{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:18px;
+    letter-spacing:-.01em;
+  }
+  nav .brand span{color:var(--moss);font-style:italic}
+  nav ul{display:flex;gap:32px;list-style:none}
+  nav ul a{
+    font-size:13px;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    transition:color .2s;
+    position:relative;
+  }
+  nav ul a:hover{color:var(--moss)}
+  nav ul a::after{
+    content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;
+    background:var(--moss);transform:scaleX(0);transform-origin:left;
+    transition:transform .3s;
+  }
+  nav ul a:hover::after{transform:scaleX(1)}
+  @media (max-width:760px){
+    nav{padding:14px 20px}
+    nav ul{display:none}
+  }
+
+  .container{
+    max-width:1240px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+  @media (max-width:760px){.container{padding:0 22px}}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;
+    padding-top:140px;
+    padding-bottom:80px;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .hero-meta{
+    display:flex;align-items:center;gap:14px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--ink-mute);
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin-bottom:36px;
+  }
+  .hero-meta .dot{width:8px;height:8px;background:var(--moss);border-radius:50%;animation:pulse 2.5s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+  .hero h1{
+    font-family:'Fraunces',serif;
+    font-weight:300;
+    font-size:clamp(54px,9vw,128px);
+    line-height:.95;
+    letter-spacing:-.035em;
+    margin-bottom:30px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    font-weight:400;
+    color:var(--moss);
+  }
+  .hero .tagline{
+    max-width:680px;
+    font-size:clamp(18px,2vw,22px);
+    line-height:1.5;
+    color:var(--ink-soft);
+    margin-bottom:48px;
+  }
+  .hero .tagline strong{color:var(--ink);font-weight:600}
+
+  .hero-info{
+    display:flex;flex-wrap:wrap;gap:48px 60px;
+    padding-top:32px;
+    border-top:1px solid var(--line);
+  }
+  .info-block{display:flex;flex-direction:column;gap:6px}
+  .info-block .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;color:var(--ink-mute);
+    letter-spacing:.1em;text-transform:uppercase;
+  }
+  .info-block .value{
+    font-size:15px;font-weight:500;
+  }
+  .info-block .value a{
+    border-bottom:1px solid var(--line);
+    transition:border-color .2s,color .2s;
+  }
+  .info-block .value a:hover{color:var(--moss);border-bottom-color:var(--moss)}
+
+  /* Decorative molecular accent */
+  .hero-deco{
+    position:absolute;
+    right:-60px;top:200px;
+    width:280px;height:280px;
+    opacity:.6;
+    pointer-events:none;
+  }
+  @media (max-width:900px){.hero-deco{display:none}}
+
+  /* SECTION SCAFFOLD */
+  section{padding:120px 0;position:relative}
+  .section-head{
+    display:flex;align-items:flex-end;justify-content:space-between;
+    margin-bottom:80px;
+    padding-bottom:24px;
+    border-bottom:1px solid var(--line);
+    gap:24px;flex-wrap:wrap;
+  }
+  .section-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:var(--moss);
+    letter-spacing:.1em;
+  }
+  .section-head h2{
+    font-family:'Fraunces',serif;
+    font-weight:400;
+    font-size:clamp(40px,5.5vw,68px);
+    line-height:1;
+    letter-spacing:-.025em;
+    margin-top:8px;
+  }
+  .section-head h2 em{font-style:italic;color:var(--moss)}
+  .section-tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--ink-mute);
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+
+  /* ABOUT */
+  .about-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:80px;
+    align-items:start;
+  }
+  @media (max-width:900px){.about-grid{grid-template-columns:1fr;gap:48px}}
+  .about-text p{
+    font-size:18px;line-height:1.65;
+    margin-bottom:20px;
+    color:var(--ink-soft);
+  }
+  .about-text p:first-child{
+    font-family:'Fraunces',serif;
+    font-size:24px;line-height:1.45;
+    color:var(--ink);font-weight:400;
+    margin-bottom:32px;
+  }
+  .keywords{
+    display:flex;flex-wrap:wrap;gap:10px;
+    margin-top:16px;
+  }
+  .kw{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    padding:6px 12px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    color:var(--ink-soft);
+    letter-spacing:.04em;
+  }
+
+  .focus-card{
+    background:var(--paper);
+    padding:36px;
+    border:1px solid var(--line);
+    position:relative;
+  }
+  .focus-card::before{
+    content:"";position:absolute;top:-1px;left:-1px;width:24px;height:24px;
+    border-top:2px solid var(--moss);border-left:2px solid var(--moss);
+  }
+  .focus-card::after{
+    content:"";position:absolute;bottom:-1px;right:-1px;width:24px;height:24px;
+    border-bottom:2px solid var(--moss);border-right:2px solid var(--moss);
+  }
+  .focus-card h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;font-size:22px;
+    margin-bottom:20px;letter-spacing:-.01em;
+  }
+  .focus-list{list-style:none}
+  .focus-list li{
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+    display:flex;gap:14px;align-items:flex-start;
+    font-size:15px;line-height:1.5;
+  }
+  .focus-list li:last-child{border-bottom:none}
+  .focus-list .icon{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;color:var(--moss);
+    flex-shrink:0;padding-top:4px;
+  }
+
+  /* PROJECTS */
+  .projects{background:var(--bg-soft)}
+  .project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px}
+  @media (max-width:900px){.project-grid{grid-template-columns:1fr}}
+  .project{
+    background:var(--paper);
+    padding:40px 36px;
+    border:1px solid var(--line);
+    position:relative;
+    transition:transform .3s ease,box-shadow .3s ease;
+  }
+  .project:hover{
+    transform:translateY(-4px);
+    box-shadow:8px 8px 0 0 var(--moss);
+  }
+  .project-status{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    padding:4px 10px;
+    border-radius:3px;
+    margin-bottom:16px;
+  }
+  .status-active{background:var(--moss);color:var(--paper)}
+  .status-pending{background:var(--bg);color:var(--ink-soft);border:1px solid var(--line)}
+  .status-applied{background:var(--rust);color:var(--paper)}
+  .project h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:26px;line-height:1.15;
+    letter-spacing:-.015em;
+    margin-bottom:6px;
+  }
+  .project .acronym{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;color:var(--moss);
+    letter-spacing:.08em;margin-bottom:18px;
+  }
+  .project p{
+    font-size:14.5px;line-height:1.6;
+    color:var(--ink-soft);margin-bottom:18px;
+  }
+  .project-meta{
+    display:flex;flex-wrap:wrap;gap:18px;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    font-size:12px;
+    color:var(--ink-mute);
+    font-family:'JetBrains Mono',monospace;
+  }
+  .project-meta span strong{color:var(--ink);font-weight:500}
+
+  /* PUBLICATIONS */
+  .pub-list{display:flex;flex-direction:column}
+  .pub{
+    display:grid;
+    grid-template-columns:60px 1fr auto;
+    gap:32px;
+    padding:28px 0;
+    border-bottom:1px solid var(--line);
+    align-items:start;
+    transition:padding-left .3s;
+  }
+  .pub:hover{padding-left:12px}
+  .pub-num{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:36px;
+    color:var(--moss);
+    line-height:1;
+  }
+  .pub-content{display:flex;flex-direction:column;gap:8px}
+  .pub-title{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:20px;line-height:1.3;
+    letter-spacing:-.01em;
+  }
+  .pub-authors{
+    font-size:14px;line-height:1.5;
+    color:var(--ink-soft);
+  }
+  .pub-authors strong{color:var(--ink);font-weight:600}
+  .pub-journal{
+    font-size:13px;
+    font-style:italic;
+    color:var(--ink-mute);
+  }
+  .pub-year{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;color:var(--ink-mute);
+    padding-top:8px;
+  }
+  .pub-doi{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--moss);
+    margin-top:6px;
+    transition:color .2s;
+    word-break:break-all;
+  }
+  .pub-doi:hover{color:var(--rust)}
+  @media (max-width:760px){
+    .pub{grid-template-columns:40px 1fr;gap:18px}
+    .pub-year{grid-column:1/-1;padding-top:0}
+    .pub-num{font-size:28px}
+    .pub-title{font-size:17px}
+  }
+
+  /* GRANTS */
+  .grants{background:var(--bg-soft)}
+  .grant-list{display:flex;flex-direction:column;gap:0}
+  .grant{
+    display:grid;
+    grid-template-columns:180px 1fr 160px;
+    gap:40px;
+    padding:36px 0;
+    border-top:1px solid var(--line);
+    align-items:start;
+  }
+  .grant:last-child{border-bottom:1px solid var(--line)}
+  @media (max-width:760px){
+    .grant{grid-template-columns:1fr;gap:12px}
+  }
+  .grant-period{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:var(--moss);
+    letter-spacing:.05em;
+  }
+  .grant-content h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;font-size:22px;
+    letter-spacing:-.01em;line-height:1.25;
+    margin-bottom:8px;
+  }
+  .grant-content .funder{
+    font-size:14px;color:var(--ink-soft);
+    margin-bottom:10px;
+    font-style:italic;
+  }
+  .grant-content p{
+    font-size:14.5px;line-height:1.6;
+    color:var(--ink-soft);
+  }
+  .grant-role{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    padding:6px 14px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    text-align:center;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--moss);
+    justify-self:start;
+    align-self:start;
+    height:fit-content;
+  }
+
+  /* CV */
+  .cv-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:80px;
+  }
+  @media (max-width:900px){.cv-grid{grid-template-columns:1fr;gap:48px}}
+  .cv-section h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;font-size:28px;
+    margin-bottom:32px;letter-spacing:-.015em;
+    display:flex;align-items:center;gap:14px;
+  }
+  .cv-section h3::before{
+    content:"";display:inline-block;
+    width:24px;height:1px;background:var(--moss);
+  }
+  .timeline{position:relative;padding-left:24px}
+  .timeline::before{
+    content:"";position:absolute;left:0;top:8px;bottom:8px;
+    width:1px;background:var(--line);
+  }
+  .tl-item{
+    position:relative;
+    padding-bottom:28px;
+  }
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item::before{
+    content:"";position:absolute;
+    left:-28px;top:8px;
+    width:9px;height:9px;
+    background:var(--paper);
+    border:1.5px solid var(--moss);
+    border-radius:50%;
+  }
+  .tl-item.current::before{background:var(--moss)}
+  .tl-date{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--moss);
+    letter-spacing:.06em;
+    margin-bottom:4px;
+  }
+  .tl-title{
+    font-weight:600;
+    font-size:15px;
+    line-height:1.35;
+    margin-bottom:2px;
+  }
+  .tl-place{
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.4;
+  }
+  .tl-place em{font-style:italic;color:var(--ink-mute)}
+
+  /* AWARDS */
+  .awards{margin-top:48px}
+  .awards h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;font-size:24px;
+    margin-bottom:24px;letter-spacing:-.01em;
+    display:flex;align-items:center;gap:14px;
+  }
+  .awards h3::before{
+    content:"";display:inline-block;
+    width:24px;height:1px;background:var(--moss);
+  }
+  .award-list{list-style:none}
+  .award-list li{
+    display:grid;
+    grid-template-columns:140px 1fr;
+    gap:24px;
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+    font-size:14px;
+  }
+  .award-list .yr{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--moss);
+  }
+
+  /* CONTACT */
+  .contact{
+    background:var(--moss-deep);
+    color:var(--paper);
+    padding:120px 0;
+  }
+  .contact .section-head{border-bottom-color:rgba(251,248,241,.2)}
+  .contact .section-num{color:var(--paper)}
+  .contact .section-tag{color:rgba(251,248,241,.6)}
+  .contact h2{color:var(--paper)}
+  .contact h2 em{color:#D9C77E}
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    align-items:start;
+  }
+  @media (max-width:760px){.contact-grid{grid-template-columns:1fr;gap:32px}}
+  .contact-grid .lead{
+    font-family:'Fraunces',serif;
+    font-size:28px;line-height:1.3;
+    font-weight:400;
+    letter-spacing:-.015em;
+  }
+  .contact-grid .lead em{font-style:italic;color:#D9C77E}
+  .contact-list{list-style:none}
+  .contact-list li{
+    padding:18px 0;
+    border-bottom:1px solid rgba(251,248,241,.15);
+    display:flex;align-items:center;gap:18px;
+  }
+  .contact-list li:first-child{padding-top:0}
+  .contact-list .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:rgba(251,248,241,.5);
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    width:80px;
+    flex-shrink:0;
+  }
+  .contact-list a{
+    font-size:16px;
+    border-bottom:1px solid transparent;
+    transition:border-color .2s,color .2s;
+  }
+  .contact-list a:hover{border-bottom-color:#D9C77E;color:#D9C77E}
+
+  /* FOOTER */
+  footer{
+    background:var(--moss-deep);
+    color:rgba(251,248,241,.6);
+    padding:40px 0;
+    border-top:1px solid rgba(251,248,241,.1);
+    font-size:13px;
+  }
+  footer .container{
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:16px;
+  }
+  footer .logo{
+    font-family:'Fraunces',serif;font-style:italic;
+    font-size:15px;color:var(--paper);
+  }
+
+  /* Reveal animations */
+  .reveal{
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity .8s ease,transform .8s ease;
+  }
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+</style>
+</head>
+<body>
+
+<!-- ============= NAV ============= -->
+<nav id="nav">
+  <div class="brand">Mattea <span>Müller</span></div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#grants">Grants</a></li>
+    <li><a href="#cv">CV</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ============= HERO ============= -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-meta">
+      <span class="dot"></span>
+      <span>Junior Research Group Leader — Hannover / Braunschweig</span>
+    </div>
+    <h1>
+      Dr. Mattea<br>
+      <em>Müller</em>
+    </h1>
+    <p class="tagline">
+      I lead the <strong>Computational Precision Nutrition</strong> group at the Peter L. Reichertz Institute for Medical Informatics — mapping the interactions between <strong>diet, microbiome and metabolome</strong> through multi-omics integration and causal machine learning.
+    </p>
+    <div class="hero-info">
+      <div class="info-block">
+        <span class="label">Affiliation</span>
+        <span class="value">PLRI — TU Braunschweig & MHH</span>
+      </div>
+      <div class="info-block">
+        <span class="label">Research Field</span>
+        <span class="value">Computational Precision Nutrition</span>
+      </div>
+      <div class="info-block">
+        <span class="label">ORCID</span>
+        <span class="value"><a href="https://orcid.org/0000-0002-3340-5122" target="_blank" rel="noopener">0000-0002-3340-5122</a></span>
+      </div>
+      <div class="info-block">
+        <span class="label">Location</span>
+        <span class="value">Hannover, Germany</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative molecular SVG -->
+  <svg class="hero-deco" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#34503A" stroke-width="1" fill="none" opacity="0.7">
+      <circle cx="140" cy="140" r="110" />
+      <circle cx="140" cy="140" r="70" />
+      <circle cx="140" cy="140" r="30" />
+      <line x1="30" y1="140" x2="250" y2="140" />
+      <line x1="140" y1="30" x2="140" y2="250" />
+      <line x1="62" y1="62" x2="218" y2="218" />
+      <line x1="218" y1="62" x2="62" y2="218" />
+    </g>
+    <g fill="#34503A">
+      <circle cx="140" cy="30" r="5" />
+      <circle cx="250" cy="140" r="5" />
+      <circle cx="140" cy="250" r="5" />
+      <circle cx="30" cy="140" r="5" />
+      <circle cx="218" cy="62" r="4" />
+      <circle cx="218" cy="218" r="4" />
+      <circle cx="62" cy="218" r="4" />
+      <circle cx="62" cy="62" r="4" />
+    </g>
+    <g fill="#B85C38">
+      <circle cx="140" cy="140" r="6" />
+    </g>
+  </svg>
+</section>
+
+<!-- ============= ABOUT ============= -->
+<section id="about">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 01</div>
+        <h2>About <em>the research</em></h2>
+      </div>
+      <div class="section-tag">Profile / Research focus</div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I am a researcher working at the intersection of nutrition science, microbiology, bioinformatics and clinical medicine — driven by the question of how individual dietary patterns shape metabolic health through the gut microbiome and metabolome.</p>
+
+        <p>My long-term goal is to establish an independent research group focused on <strong>precision nutrition and multi-omics approaches</strong>, developing personalized strategies that translate complex biological data into actionable public-health insights. I combine extensive experience in human intervention trials with computational expertise in microbiome analysis, metabolomics, and causal machine learning.</p>
+
+        <p>I trained as a cell biologist (Osnabrück), molecular life scientist (HU Berlin), and earned my PhD at <em>Maastricht University</em> on dietary-fiber modulation of gastrointestinal transit and metabolic health. I now combine that wet-lab foundation with a Master's in Biomedical Data Science (MHH) to drive translational multi-omics research.</p>
+
+        <div class="keywords">
+          <span class="kw">Microbiome</span>
+          <span class="kw">Metabolome</span>
+          <span class="kw">Multi-Omics Integration</span>
+          <span class="kw">Causal Machine Learning</span>
+          <span class="kw">Precision Nutrition</span>
+          <span class="kw">Dietary Fibers</span>
+          <span class="kw">eHealth</span>
+          <span class="kw">FAIR / Open Science</span>
+        </div>
+      </div>
+
+      <div class="focus-card">
+        <h3>Research Pillars</h3>
+        <ul class="focus-list">
+          <li><span class="icon">01</span><span>Diet–microbiome–metabolome interactions in health and disease</span></li>
+          <li><span class="icon">02</span><span>Multi-omics integration across cohorts and intervention trials</span></li>
+          <li><span class="icon">03</span><span>Causal ML to disentangle dietary mechanisms</span></li>
+          <li><span class="icon">04</span><span>Translational eHealth tools for clinicians and patients</span></li>
+          <li><span class="icon">05</span><span>FAIR data and reproducible nutritional epidemiology</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= PROJECTS ============= -->
+<section id="projects" class="projects">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 02</div>
+        <h2>Current <em>projects</em></h2>
+      </div>
+      <div class="section-tag">Active & upcoming research</div>
+    </div>
+
+    <div class="project-grid">
+
+      <article class="project">
+        <span class="project-status status-active">Active · PI</span>
+        <h3>Computational Precision Nutrition</h3>
+        <div class="acronym">CPN-MAP · BMFTR Junior Research Group</div>
+        <p>Building an integrative computational framework that combines diet, gut microbiome and metabolome data to predict individual metabolic outcomes. Leveraging causal machine learning and multi-cohort data (LifeLines DEEP, TREND, FoCus, PERSON, Estonian Biobank, TwinsUK) to uncover biological mechanisms linking dietary patterns to health.</p>
+        <div class="project-meta">
+          <span><strong>5 years</strong> · 1.48M €</span>
+          <span>PLRI · TU BS / MHH</span>
+        </div>
+      </article>
+
+      <article class="project">
+        <span class="project-status status-active">Active · PI</span>
+        <h3>FAIR4CPN</h3>
+        <div class="acronym">NFDI4Health Use Case · Dietary Index Harmonization</div>
+        <p>Calculating and harmonizing widely used dietary indices across three large European health studies (LifeLines, TwinsUK, Estonian Biobank) and an MHH lifestyle intervention. Documenting scoring algorithms in a machine-readable form to make nutritional epidemiology reproducible and FAIR.</p>
+        <div class="project-meta">
+          <span><strong>30 months</strong></span>
+          <span>NFDI4Health</span>
+        </div>
+      </article>
+
+      <article class="project">
+        <span class="project-status status-applied">Applied · PI</span>
+        <h3>CED Navigator</h3>
+        <div class="acronym">IBD · Patient-Centered Nutritional Framework</div>
+        <p>Creating a patient-centered framework for translating nutritional evidence into routine IBD care. Addressing the gap between strong scientific evidence on dietary fiber and the fragmented, often restrictive eating patterns adopted by patients with Crohn's disease and ulcerative colitis. In collaboration with Dr. Miriam Wiestler, MHH.</p>
+        <div class="project-meta">
+          <span>Clinical Translation</span>
+          <span>w/ MHH Gastroenterology</span>
+        </div>
+      </article>
+
+      <article class="project">
+        <span class="project-status status-applied">DGEM 2025</span>
+        <h3>Multiomics in iRBD &amp; Parkinson's</h3>
+        <div class="acronym">Diet · Microbiome · Metabolome — Early Markers</div>
+        <p>Investigating the interplay between diet, microbiome and metabolome in REM Sleep Behaviour Disorder as early markers of Parkinson's disease. Shotgun metagenomics and untargeted metabolomics on PASS-PD and FoCus cohort samples — a multi-omics approach to neurodegenerative risk.</p>
+        <div class="project-meta">
+          <span>DGEM Forschungsförderung</span>
+          <span>15 months</span>
+        </div>
+      </article>
+
+      <article class="project">
+        <span class="project-status status-active">2022–2025</span>
+        <h3>NutriPredict</h3>
+        <div class="acronym">Automated ML for Dietary Health Prediction</div>
+        <p>Investigating the use of automated machine learning to predict the health benefits of dietary modifications. Funded by the Joachim Herz Stiftung Add-On Fellowship for Interdisciplinary Life Science.</p>
+        <div class="project-meta">
+          <span><strong>3 years</strong></span>
+          <span>Joachim Herz Stiftung</span>
+        </div>
+      </article>
+
+      <article class="project">
+        <span class="project-status status-pending">Recent</span>
+        <h3>Spring School: Machine Learning in Nutrition</h3>
+        <div class="acronym">2024 · Interdisciplinary Training</div>
+        <p>Organized an interdisciplinary training event bringing together early-career researchers from nutrition science and machine learning. Funded as a Begegnungszone by the Joachim Herz Stiftung.</p>
+        <div class="project-meta">
+          <span>Capacity building</span>
+          <span>Lead organizer</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============= PUBLICATIONS ============= -->
+<section id="publications">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 03</div>
+        <h2>Selected <em>publications</em></h2>
+      </div>
+      <div class="section-tag">Full list on ORCID</div>
+    </div>
+
+    <div class="pub-list">
+
+      <article class="pub">
+        <div class="pub-num">01</div>
+        <div class="pub-content">
+          <h3 class="pub-title">Dietary selective effects manifest in the human gut microbiota from species composition to strain genetic makeup</h3>
+          <p class="pub-authors">Huang K.D., <strong>Müller M</strong>, et al.</p>
+          <p class="pub-journal">Cell Reports</p>
+          <a class="pub-doi" href="https://doi.org/10.1016/j.celrep.2024.115067" target="_blank" rel="noopener">doi.org/10.1016/j.celrep.2024.115067 ↗</a>
+        </div>
+        <div class="pub-year">2024</div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-num">02</div>
+        <div class="pub-content">
+          <h3 class="pub-title">Association of Diet, Lifestyle, and Chronotype with Metabolic Health in Ukrainian Adults: A cross-sectional study</h3>
+          <p class="pub-authors">Romanenko M., Schuster J., Piven L., Synieok, Dubiley T., Bogomaz L., Hahn A., <strong>Müller M</strong></p>
+          <p class="pub-journal">Scientific Reports</p>
+          <a class="pub-doi" href="https://doi.org/10.1038/s41598-024-55715-0" target="_blank" rel="noopener">doi.org/10.1038/s41598-024-55715-0 ↗</a>
+        </div>
+        <div class="pub-year">2024</div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-num">03</div>
+        <div class="pub-content">
+          <h3 class="pub-title">Distinct microbial taxa are associated with LDL-cholesterol reduction after 12 weeks of Lactobacillus plantarum intake in mild hypercholesterolemia</h3>
+          <p class="pub-authors"><strong>Müller M</strong>, Kerlikowsky F., et al.</p>
+          <p class="pub-journal">Probiotics and Antimicrobial Proteins</p>
+          <a class="pub-doi" href="https://doi.org/10.1007/s12602-023-10191-2" target="_blank" rel="noopener">doi.org/10.1007/s12602-023-10191-2 ↗</a>
+        </div>
+        <div class="pub-year">2023</div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-num">04</div>
+        <div class="pub-content">
+          <h3 class="pub-title">Fiber mixture-specific effect on distal colonic fermentation and metabolic health in lean but not in prediabetic men</h3>
+          <p class="pub-authors">Canfora E.E., Hermes G.D.A., <strong>Müller M</strong>, et al.</p>
+          <p class="pub-journal">Gut Microbes</p>
+          <a class="pub-doi" href="https://doi.org/10.1080/19490976.2021.2009297" target="_blank" rel="noopener">doi.org/10.1080/19490976.2021.2009297 ↗</a>
+        </div>
+        <div class="pub-year">2022</div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-num">05</div>
+        <div class="pub-content">
+          <h3 class="pub-title">Application of a Modified Healthy Eating Index (HEI-Flex) to Compare the Diet Quality of Flexitarians, Vegans and Omnivores in Germany</h3>
+          <p class="pub-authors">Bruns A., <strong>Müller M</strong>, et al.</p>
+          <p class="pub-journal">Nutrients</p>
+          <a class="pub-doi" href="https://doi.org/10.3390/nu14153038" target="_blank" rel="noopener">doi.org/10.3390/nu14153038 ↗</a>
+        </div>
+        <div class="pub-year">2022</div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-num">06</div>
+        <div class="pub-content">
+          <h3 class="pub-title">Nutritional and health status of adult Syrian refugees in the early years of asylum in Germany: a cross-sectional pilot study</h3>
+          <p class="pub-authors">Al Masri F., <strong>Müller M</strong>, et al.</p>
+          <p class="pub-journal">BMC Public Health</p>
+          <a class="pub-doi" href="https://doi.org/10.1186/s12889-022-14684-7" target="_blank" rel="noopener">doi.org/10.1186/s12889-022-14684-7 ↗</a>
+        </div>
+        <div class="pub-year">2022</div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-num">07</div>
+        <div class="pub-content">
+          <h3 class="pub-title">Effect of wheat bran derived prebiotic supplementation on gastrointestinal transit, gut microbiota and metabolic health: a randomized controlled trial</h3>
+          <p class="pub-authors"><strong>Müller M</strong>, Hermes G.D.A., et al.</p>
+          <p class="pub-journal">Gut Microbes</p>
+          <a class="pub-doi" href="https://doi.org/10.1080/19490976.2019.1704141" target="_blank" rel="noopener">doi.org/10.1080/19490976.2019.1704141 ↗</a>
+        </div>
+        <div class="pub-year">2020</div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-num">08</div>
+        <div class="pub-content">
+          <h3 class="pub-title">Distal colonic transit is linked to gut microbiota diversity and microbial fermentation in humans with slow colonic transit</h3>
+          <p class="pub-authors"><strong>Müller M</strong>, Hermes G.D.A., et al.</p>
+          <p class="pub-journal">American Journal of Physiology — Gastrointestinal and Liver Physiology</p>
+          <a class="pub-doi" href="https://doi.org/10.1152/ajpgi.00283.2019" target="_blank" rel="noopener">doi.org/10.1152/ajpgi.00283.2019 ↗</a>
+        </div>
+        <div class="pub-year">2019</div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-num">09</div>
+        <div class="pub-content">
+          <h3 class="pub-title">Circulating but not faecal short-chain fatty acids are related to insulin sensitivity, lipolysis and GLP-1 concentrations in humans</h3>
+          <p class="pub-authors"><strong>Müller M</strong>, González Hernández M.A., et al.</p>
+          <p class="pub-journal">Scientific Reports</p>
+          <a class="pub-doi" href="https://doi.org/10.1038/s41598-019-48775-0" target="_blank" rel="noopener">doi.org/10.1038/s41598-019-48775-0 ↗</a>
+        </div>
+        <div class="pub-year">2019</div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-num">10</div>
+        <div class="pub-content">
+          <h3 class="pub-title">Gastrointestinal Transit Time, Glucose Homeostasis and Metabolic Health: Modulation by Dietary Fibers</h3>
+          <p class="pub-authors"><strong>Müller M</strong>, Canfora E.E., Blaak E.E.</p>
+          <p class="pub-journal">Nutrients · Review</p>
+          <a class="pub-doi" href="https://doi.org/10.3390/nu10030275" target="_blank" rel="noopener">doi.org/10.3390/nu10030275 ↗</a>
+        </div>
+        <div class="pub-year">2018</div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============= GRANTS ============= -->
+<section id="grants" class="grants">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 04</div>
+        <h2>Grants &amp; <em>funding</em></h2>
+      </div>
+      <div class="section-tag">Acquired third-party funding</div>
+    </div>
+
+    <div class="grant-list">
+
+      <article class="grant">
+        <div class="grant-period">2025 → ongoing</div>
+        <div class="grant-content">
+          <h3>CPN-Map — Computational Precision Nutrition</h3>
+          <div class="funder">BMFTR Junior Research Group · 1,476,919 € · 5 years</div>
+          <p>Establishing a junior research group at PLRI to develop a computational framework integrating diet, microbiome and metabolome data for predicting individual metabolic outcomes.</p>
+        </div>
+        <div class="grant-role">Principal Investigator</div>
+      </article>
+
+      <article class="grant">
+        <div class="grant-period">2026 (applied)</div>
+        <div class="grant-content">
+          <h3>FAIR4CPN</h3>
+          <div class="funder">NFDI4Health Use Case Funding · 30 months</div>
+          <p>Harmonization and FAIR-compliant operationalization of dietary indices across European cohort studies, leveraging NFDI4Health services for reproducible nutritional epidemiology.</p>
+        </div>
+        <div class="grant-role">Principal Investigator</div>
+      </article>
+
+      <article class="grant">
+        <div class="grant-period">2025 (applied)</div>
+        <div class="grant-content">
+          <h3>Diet, Microbiome &amp; Metabolome in iRBD as Early Markers of Parkinson's</h3>
+          <div class="funder">DGEM Forschungsförderung 2025 · 12,720 €</div>
+          <p>Multi-omics analysis of shotgun metagenomics and untargeted metabolomics in patients with idiopathic REM Sleep Behaviour Disorder and matched FoCus cohort participants.</p>
+        </div>
+        <div class="grant-role">Principal Investigator</div>
+      </article>
+
+      <article class="grant">
+        <div class="grant-period">2022 — 2025</div>
+        <div class="grant-content">
+          <h3>NutriPredict — Add-On Fellowship for Interdisciplinary Life Science</h3>
+          <div class="funder">Joachim Herz Stiftung</div>
+          <p>Use of automated machine learning to predict the health benefits of dietary modifications; funding for personal qualification, conference participation and project activities.</p>
+        </div>
+        <div class="grant-role">Principal Investigator</div>
+      </article>
+
+      <article class="grant">
+        <div class="grant-period">2024</div>
+        <div class="grant-content">
+          <h3>Spring School: Machine Learning in Nutrition</h3>
+          <div class="funder">Joachim Herz Stiftung · Begegnungszone</div>
+          <p>Funding to organize an interdisciplinary training event for early-career researchers at the interface of nutrition science and machine learning.</p>
+        </div>
+        <div class="grant-role">Lead Applicant</div>
+      </article>
+
+      <article class="grant">
+        <div class="grant-period">2023</div>
+        <div class="grant-content">
+          <h3>Philipp Schwartz Initiative — Researchers at Risk</h3>
+          <div class="funder">Alexander von Humboldt Foundation</div>
+          <p>Fellowship supporting Dr. Mariana Romanenko on metabolic risks, biorhythms, nutrition and the gut microbiome.</p>
+        </div>
+        <div class="grant-role">Co-Applicant &amp; Mentor</div>
+      </article>
+
+      <article class="grant">
+        <div class="grant-period">2022</div>
+        <div class="grant-content">
+          <h3>VolkswagenStiftung — Scholarship for Ukrainian Researchers</h3>
+          <div class="funder">VolkswagenStiftung</div>
+          <p>Supporting Dr. Mariana Romanenko in the framework of funding for researchers in crisis situations.</p>
+        </div>
+        <div class="grant-role">Co-Applicant &amp; Mentor</div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============= CV ============= -->
+<section id="cv">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 05</div>
+        <h2>Curriculum <em>vitae</em></h2>
+      </div>
+      <div class="section-tag">Experience · Education · Awards</div>
+    </div>
+
+    <div class="cv-grid">
+      <div class="cv-section">
+        <h3>Research Experience</h3>
+        <div class="timeline">
+
+          <div class="tl-item current">
+            <div class="tl-date">SINCE 08/2025</div>
+            <div class="tl-title">Junior Research Group Leader — CPN</div>
+            <div class="tl-place">Peter L. Reichertz Institute for Medical Informatics, TU Braunschweig &amp; Hannover Medical School (MHH)</div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">01/2024 — 04/2025</div>
+            <div class="tl-title">Scientific Project Manager — NFDI4Microbiota</div>
+            <div class="tl-place">Computational Biology for Infection Research, Helmholtz Centre for Infection Research, Braunschweig</div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">11/2019 — 04/2024</div>
+            <div class="tl-title">Postdoctoral Researcher</div>
+            <div class="tl-place">Institute of Food Science and Human Nutrition, Leibniz University Hannover · <em>Prof. Dr. Andreas Hahn</em><br><em>Parental leave 01/2020 — 11/2020</em></div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">01/2015 — 10/2019</div>
+            <div class="tl-title">PhD Researcher (Human Biology)</div>
+            <div class="tl-place">NUTRIM School for Nutrition and Translational Research in Metabolism, Maastricht University Medical Centre · <em>Prof. Ellen Blaak</em></div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">05/2014 — 08/2014</div>
+            <div class="tl-title">Research Assistant</div>
+            <div class="tl-place">Department of Gastroenterology, Infectiology and Rheumatology, Charité Berlin</div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">04/2013 — 09/2014</div>
+            <div class="tl-title">SFB 633 MSc Fellowship</div>
+            <div class="tl-place">Division of Gastroenterology, Charité Berlin · <em>Prof. Thomas Schneider</em></div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">09/2011 — 12/2011</div>
+            <div class="tl-title">Research Internship</div>
+            <div class="tl-place">Institute of Microbiology, Tumor and Cell Biology, Karolinska Institute, Stockholm</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="cv-section">
+        <h3>Education</h3>
+        <div class="timeline">
+
+          <div class="tl-item current">
+            <div class="tl-date">10/2022 — 08/2025</div>
+            <div class="tl-title">M.Sc. Biomedical Data Science</div>
+            <div class="tl-place">Hannover Medical School (MHH) · Thesis: <em>Integrative Analysis of Microbiome and Metabolome Networks in Patients at Neurodegenerative Disease Risk</em></div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">01/2015 — 10/2019</div>
+            <div class="tl-title">PhD in Human Biology</div>
+            <div class="tl-place">Maastricht University Medical Centre · Dissertation: <em>Gastrointestinal transit time, gut microbiota and metabolic health: Modulation by dietary fibers</em></div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">04/2012 — 09/2014</div>
+            <div class="tl-title">M.Sc. Molecular Life Sciences</div>
+            <div class="tl-place">Humboldt-Universität zu Berlin · Ø 1.5</div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">10/2008 — 10/2011</div>
+            <div class="tl-title">B.Sc. Cell Biology</div>
+            <div class="tl-place">Universität Osnabrück · Ø 2.1</div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">09/2007 — 09/2008</div>
+            <div class="tl-title">Medical-Technical Laboratory Assistant</div>
+            <div class="tl-place">University Medical Centre Schleswig-Holstein, Lübeck</div>
+          </div>
+
+        </div>
+
+        <div class="awards">
+          <h3>Awards &amp; Memberships</h3>
+          <ul class="award-list">
+            <li><span class="yr">Since 2022</span><span>Add-on Fellowship for Interdisciplinary Life Science, Joachim Herz Stiftung</span></li>
+            <li><span class="yr">2019</span><span>NASO Grant for PhD thesis printing</span></li>
+            <li><span class="yr">2018</span><span>Presentation Prize, Diabetes and Nutrition Study Group</span></li>
+            <li><span class="yr">2018</span><span>NASO Travel Grant — European Congress of Obesity</span></li>
+            <li><span class="yr">2013–2014</span><span>SFB 633 Qualification Fellowship</span></li>
+            <li><span class="yr">2011</span><span>Leonardo da Vinci Mobility Fellowship (Stockholm)</span></li>
+            <li><span class="yr">Since 2023</span><span>Early Career Scientist Group, German Nutrition Society</span></li>
+            <li><span class="yr">Since 2019</span><span>German Society for Nutritional Medicine (DGEM)</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= CONTACT ============= -->
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-num">§ 06</div>
+        <h2>Get in <em>touch</em></h2>
+      </div>
+      <div class="section-tag">Collaborations / Students / Talks</div>
+    </div>
+
+    <div class="contact-grid">
+      <div>
+        <p class="lead">Interested in <em>collaborating</em>, supervising students together, or inviting me for a talk? I'd love to hear from you.</p>
+      </div>
+      <ul class="contact-list">
+        <li>
+          <span class="label">Email</span>
+          <a href="mailto:Mattea.mueller@plri.de">Mattea.mueller@plri.de</a>
+        </li>
+        <li>
+          <span class="label">ORCID</span>
+          <a href="https://orcid.org/0000-0002-3340-5122" target="_blank" rel="noopener">0000-0002-3340-5122</a>
+        </li>
+        <li>
+          <span class="label">GitHub</span>
+          <a href="https://github.com/" target="_blank" rel="noopener">@your-handle</a>
+        </li>
+        <li>
+          <span class="label">LinkedIn</span>
+          <a href="https://linkedin.com/" target="_blank" rel="noopener">Mattea Müller</a>
+        </li>
+        <li>
+          <span class="label">Address</span>
+          <span>PLRI · Karl-Wiechert-Allee 3, 30625 Hannover</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="logo">Mattea Müller — Computational Precision Nutrition</div>
+    <div>© <span id="yr"></span> · Last updated May 2026</div>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav border
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // Current year
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.12});
+  document.querySelectorAll('section > .container > *').forEach(el => {
+    el.classList.add('reveal');
+    io.observe(el);
+  });
+</script>
+
+</body>
+</html>
