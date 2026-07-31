@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CED NutriNavigator — Mattea Müller</title>
+<meta name="description" content="CED NutriNavigator — a digital, evidence-based nutrition tool for people with inflammatory bowel disease, developed at Hannover Medical School." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+  :root{
+    --bg:#ffffff; --bg-soft:#fafafa;
+    --ink:#1f1f1f; --ink-soft:#4a4a4a; --ink-mute:#828282;
+    --line:#e8e8e8;
+    --accent:#B509AC; --accent-hover:#8a067f; --accent-soft:#f7e9f6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:80px}
+  body{background:var(--bg);color:var(--ink);font-family:'Roboto',-apple-system,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none;transition:color .15s}
+  a:hover{color:var(--accent-hover)}
+  ::selection{background:var(--accent-soft)}
+  h1,h2,h3,h4{font-family:'Roboto Slab',Georgia,serif;font-weight:500;color:var(--ink)}
+  img{max-width:100%;display:block}
+
+  /* NAV */
+  nav{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line);z-index:50;padding:18px 0}
+  nav .container{display:flex;justify-content:space-between;align-items:center}
+  nav .brand{font-family:'Roboto Slab',serif;font-weight:500;font-size:22px;color:var(--ink);letter-spacing:-.01em}
+  nav .brand a{color:inherit}
+  nav ul{display:flex;gap:28px;list-style:none}
+  nav ul a{font-size:14px;font-weight:400;color:var(--ink-soft);padding:6px 0}
+  nav ul a:hover,nav ul a.active{color:var(--accent)}
+  @media (max-width:760px){nav .brand{font-size:18px}nav ul{gap:14px;flex-wrap:wrap;justify-content:flex-end}nav ul a{font-size:13px}}
+
+  .container{max-width:980px;margin:0 auto;padding:0 28px}
+  @media (max-width:760px){.container{padding:0 20px}}
+
+  /* HERO */
+  .hero{padding:60px 0 46px}
+  @media (max-width:760px){.hero{padding:40px 0 32px}}
+  .breadcrumb{font-size:13px;color:var(--ink-mute);margin-bottom:26px}
+  .breadcrumb a{color:var(--ink-mute);border-bottom:1px solid var(--line)}
+  .breadcrumb a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+  .hero-logo{width:210px;margin-bottom:22px}
+  @media (max-width:760px){.hero-logo{width:170px}}
+  .status-pill{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:6px 12px;border-radius:3px;margin-bottom:20px}
+  .status-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  @media (prefers-reduced-motion:reduce){.status-pill .dot{animation:none}}
+  .hero h1{font-size:44px;font-weight:500;line-height:1.1;letter-spacing:-.02em;margin-bottom:12px}
+  @media (max-width:760px){.hero h1{font-size:33px}}
+  .hero .subtitle{font-size:17px;color:var(--ink-soft);margin-bottom:30px;line-height:1.5;max-width:660px}
+  .hero p.lead{font-size:17px;line-height:1.7;margin-bottom:16px;max-width:720px}
+  .hero p.lead strong{font-weight:500}
+
+  section.block{padding:52px 0;border-top:1px solid var(--line)}
+  section.block h2{font-size:30px;font-weight:500;margin-bottom:14px;letter-spacing:-.01em}
+  section.block h2 .small{font-size:14px;font-family:'Roboto',sans-serif;color:var(--ink-mute);font-weight:400;margin-left:12px}
+  .section-intro{max-width:720px;margin-bottom:8px;color:var(--ink-soft)}
+
+  /* MODULE + MOCKUP ROWS — signature */
+  .journey{margin-top:44px}
+  .step{
+    display:grid;grid-template-columns:300px 1fr;gap:52px;align-items:center;
+    padding:44px 0;border-bottom:1px solid var(--line);
+  }
+  .step:last-child{border-bottom:none}
+  @media (max-width:760px){.step{grid-template-columns:1fr;gap:26px;padding:32px 0}}
+  .step .shot{
+    border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg-soft);
+    cursor:zoom-in;transition:box-shadow .25s,border-color .25s,transform .25s;
+    width:100%;padding:0;
+  }
+  .step .shot:hover{border-color:var(--accent);box-shadow:0 10px 30px rgba(0,0,0,.09);transform:translateY(-3px)}
+  .step .shot:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .step .num{
+    display:inline-block;font-family:'Roboto Slab',serif;font-size:12px;font-weight:500;
+    color:var(--accent);letter-spacing:.1em;margin-bottom:10px;
+  }
+  .step h3{font-size:22px;font-weight:500;line-height:1.25;margin-bottom:6px}
+  .step .q{font-size:15.5px;color:var(--accent);font-style:italic;margin-bottom:12px}
+  .step p{font-size:15.5px;color:var(--ink-soft);line-height:1.65;margin-bottom:14px;max-width:520px}
+  .step .out{font-size:13.5px;color:var(--ink-mute);line-height:1.5;border-left:2px solid var(--accent-soft);padding-left:14px;max-width:520px}
+  .step .out strong{color:var(--ink-soft);font-weight:500}
+
+  /* LIGHTBOX */
+  .lb{position:fixed;inset:0;background:rgba(20,20,20,.86);display:none;align-items:center;justify-content:center;z-index:100;padding:32px}
+  .lb.open{display:flex}
+  .lb img{max-height:90vh;max-width:100%;width:auto;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+  .lb .close{position:absolute;top:20px;right:26px;font-size:26px;color:#fff;background:none;border:none;cursor:pointer;line-height:1;padding:6px}
+  .lb .close:focus-visible{outline:2px solid #fff;outline-offset:3px}
+
+  /* CALLOUT */
+  .callout{background:var(--accent-soft);border-radius:6px;padding:32px 34px;margin-top:34px}
+  @media (max-width:760px){.callout{padding:26px 22px}}
+  .callout .lang{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .callout h3{font-size:20px;font-weight:500;margin-bottom:10px}
+  .callout p{font-size:15.5px;line-height:1.65;color:var(--ink);margin-bottom:14px;max-width:660px}
+  .callout ul{list-style:none;margin:0 0 18px;max-width:660px}
+  .callout li{font-size:15px;color:var(--ink);padding:4px 0 4px 22px;position:relative;line-height:1.5}
+  .callout li::before{content:"";position:absolute;left:0;top:14px;width:8px;height:1px;background:var(--accent)}
+  .btn{display:inline-block;font-size:13px;font-weight:500;letter-spacing:.04em;padding:11px 22px;border:1px solid var(--accent);border-radius:3px;color:var(--accent);background:var(--bg);transition:background .15s,color .15s}
+  .btn:hover{background:var(--accent);color:#fff}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  /* TEAM */
+  .team{display:grid;grid-template-columns:repeat(2,1fr);gap:0 44px;margin-top:24px}
+  @media (max-width:760px){.team{grid-template-columns:1fr}}
+  .person{padding:16px 0;border-bottom:1px solid var(--line)}
+  .person .role{font-size:11.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+  .person .name{font-size:15.5px;font-weight:500;line-height:1.35}
+  .person .aff{font-size:13.5px;color:var(--ink-soft);line-height:1.45}
+
+  .note{border-left:2px solid var(--line);padding:4px 0 4px 20px;font-size:14px;color:var(--ink-mute);line-height:1.6;max-width:720px;margin-top:28px}
+  .note strong{color:var(--ink-soft);font-weight:500}
+
+  footer{padding:36px 0 48px;border-top:1px solid var(--line);margin-top:32px;color:var(--ink-mute);font-size:13px;text-align:center}
+  footer .socials{display:flex;justify-content:center;gap:18px;font-size:18px;margin-bottom:16px}
+  footer .socials a{color:var(--ink-soft);transition:color .2s}
+  footer .socials a:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container">
+    <div class="brand"><a href="index.html">Mattea Müller</a></div>
+    <ul>
+      <li><a href="index.html#about">about</a></li>
+      <li><a href="index.html#projects">projects</a></li>
+      <li><a href="index.html#publications">publications</a></li>
+      <li><a href="index.html#grants">grants</a></li>
+      <li><a href="index.html#cv">cv</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html#projects">projects</a> &nbsp;/&nbsp; CED NutriNavigator</div>
+
+    <img class="hero-logo" src="images/nn-logo.png" alt="CED NutriNavigator logo">
+
+    <div class="status-pill"><span class="dot"></span> Recruitment starting soon</div>
+
+    <h1>CED NutriNavigator</h1>
+    <p class="subtitle">
+      An evidence-based digital nutrition tool for people living with inflammatory bowel disease —
+      developed with patients at Hannover Medical School.
+    </p>
+
+    <p class="lead">
+      People with Crohn's disease or ulcerative colitis make decisions about food every single day.
+      <em>Will this trigger symptoms? Is fibre good or bad for me? What should I eat during a flare?</em>
+      Clinical appointments rarely have room for those questions, and European guidelines
+      recommend nutritional counselling that most people never actually get.
+    </p>
+    <p class="lead">
+      So the questions get answered by online searching, trial and error, and cutting foods out — which
+      leads to unnecessary restriction, nutritional risk and persistent uncertainty.
+      <strong>The CED NutriNavigator translates the existing evidence into guidance that fits a
+      person's situation and can be acted on today.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="block" id="tool">
+  <div class="container">
+    <h2>how it works <span class="small">a walk through the app</span></h2>
+    <p class="section-intro">
+      The app starts with a short self-assessment and then opens three modules, each answering a
+      different kind of question. Screens shown are from the current research prototype — tap any of
+      them to enlarge.
+    </p>
+
+    <div class="journey">
+
+      <div class="step">
+        <button class="shot" aria-label="Enlarge screen: initial self-assessment"
+                data-full="images/nn-01-self-assessment.webp">
+          <img src="images/nn-01-self-assessment.webp" alt="App screen showing the initial self-assessment: diagnosis, disease activity, stool frequency, weight loss, intolerances and dietary pattern." loading="lazy">
+        </button>
+        <div>
+          <span class="num">START</span>
+          <h3>Initial self-assessment</h3>
+          <div class="q">"Tell us about your situation."</div>
+          <p>
+            Diagnosis, current disease activity, symptoms, recent weight loss, known intolerances and
+            dietary pattern. This is what makes everything downstream specific to the person rather
+            than generic advice.
+          </p>
+          <div class="out"><strong>Determines</strong> which modules, questions and recommendations are shown.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <button class="shot" aria-label="Enlarge screen: NutriGuide"
+                data-full="images/nn-02-nutriguide.webp">
+          <img src="images/nn-02-nutriguide.webp" alt="NutriGuide screen ranking dietary strategies — Healthy Eating Steps, Mediterranean diet and lactose-free — with matching recipe suggestions." loading="lazy">
+        </button>
+        <div>
+          <span class="num">MODULE 01</span>
+          <h3>NutriGuide</h3>
+          <div class="q">"Which nutrition strategy fits my current situation?"</div>
+          <p>
+            Matches established dietary strategies to disease phase and symptoms, ranked by how well
+            each one fits and how strong the evidence behind it is — with recipes that go with the
+            chosen strategy.
+          </p>
+          <div class="out"><strong>Output:</strong> a suitable dietary strategy for remission, flare or specific symptoms.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <button class="shot" aria-label="Enlarge screen: NutriCheck"
+                data-full="images/nn-03-nutricheck.webp">
+          <img src="images/nn-03-nutricheck.webp" alt="NutriCheck screen with adaptive food frequency questions and personalised feedback on cooking, vegetables, convenience foods and drinking volume." loading="lazy">
+        </button>
+        <div>
+          <span class="num">MODULE 02</span>
+          <h3>NutriCheck</h3>
+          <div class="q">"What should I change in my diet?"</div>
+          <p>
+            An adaptive set of dietary questions — only the ones relevant to the person are asked —
+            compared against what the evidence supports, taking symptoms, disease phase and
+            intolerances into account.
+          </p>
+          <div class="out"><strong>Output:</strong> concrete, food-group level suggestions. Where possible, a tolerable alternative rather than a ban.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <button class="shot" aria-label="Enlarge screen: NutriWissen"
+                data-full="images/nn-04-nutriwissen.webp">
+          <img src="images/nn-04-nutriwissen.webp" alt="NutriWissen screen showing a barcode scan of a yoghurt with processing level, additives, sugar alcohols, added sugar and lactose content." loading="lazy">
+        </button>
+        <div>
+          <span class="num">MODULE 03</span>
+          <h3>NutriWissen</h3>
+          <div class="q">"How should I read this product?"</div>
+          <p>
+            Scan a barcode in the supermarket and get the things that actually matter in IBD:
+            degree of processing, additives and emulsifiers, sugar alcohols, added sugar, lactose —
+            plus a plain-language verdict.
+          </p>
+          <div class="out"><strong>Output:</strong> nutrition facts and product classification, explained in everyday terms.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note">
+      <strong>How the recommendations are made.</strong> Every recommendation comes from an explicit,
+      documented rule linking a clinical or dietary pattern to a guidance module — nothing is generated
+      as a black box. The Navigator is a research prototype: it is not a medical device, not a certified
+      digital health application (DiGA), and it does not replace medical care or individual dietary therapy.
+      <br><br>
+      App screens are shown in German; the tool is being developed for German-speaking users.
+      Illustrations in the prototype were AI-generated.
+    </div>
+  </div>
+</section>
+
+<!-- STUDY -->
+<section class="block" id="study">
+  <div class="container">
+    <h2>the study</h2>
+    <p class="section-intro">
+      The Navigator is being built with people who live with IBD, not just for them. First we ask what
+      people actually need in interviews; then we evaluate whether the prototype is understandable and
+      genuinely useful in everyday life. Both stages run at Hannover Medical School, together with the
+      DCCV and the Kompetenznetz Darmerkrankungen.
+    </p>
+
+    <div class="callout">
+      <div class="lang">Für Betroffene</div>
+      <h3>Wir suchen Teilnehmende</h3>
+      <p>
+        Für die Entwicklung und Bewertung des CED-NutriNavigators suchen wir Erwachsene mit Morbus Crohn
+        oder Colitis ulcerosa. Teilnehmen können Sie, wenn Sie
+      </p>
+      <ul>
+        <li>18 Jahre oder älter sind</li>
+        <li>seit mehr als drei Monaten eine gesicherte CED-Diagnose haben</li>
+        <li>Fragebögen und Gespräche auf Deutsch beantworten können</li>
+      </ul>
+      <p>
+        Die Teilnahme ist freiwillig, erfolgt online und kann jederzeit ohne Angabe von Gründen beendet
+        werden. Die Rekrutierung startet in Kürze — schreiben Sie uns gerne, wenn Sie informiert werden
+        möchten, sobald es losgeht.
+      </p>
+      <p style="margin-top:20px">
+        <!-- TODO: swap in the dedicated study address once it exists -->
+        <a class="btn" href="mailto:Mattea.mueller@plri.de?subject=CED%20NutriNavigator%20Studie">Über die Studie informiert werden</a>
+      </p>
+    </div>
+
+    <div class="note">
+      Data are collected pseudonymously and stored on secured MHH servers in line with the GDPR.
+      The study will be registered in the German Clinical Trials Register (DRKS) before recruitment
+      begins; the DRKS ID and the ethics committee vote will be listed here once available.
+      <!-- TODO: add DRKS ID + ethics vote number -->
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="block" id="team">
+  <div class="container">
+    <h2>team &amp; partners</h2>
+
+    <div class="team">
+      <div class="person">
+        <div class="role">Project lead</div>
+        <div class="name">Dr. Mattea Müller</div>
+        <div class="aff">Peter L. Reichertz Institute for Medical Informatics, TU Braunschweig &amp; MHH</div>
+      </div>
+      <div class="person">
+        <div class="role">Project lead</div>
+        <div class="name">Dr. med. Miriam Wiestler</div>
+        <div class="aff">Department of Gastroenterology, Hepatology, Infectious Diseases and Endocrinology, MHH</div>
+      </div>
+      <div class="person">
+        <div class="role">Development</div>
+        <div class="name">Madeline Bartsch</div>
+        <div class="aff">Peter L. Reichertz Institute for Medical Informatics, TU Braunschweig &amp; MHH</div>
+      </div>
+      <div class="person">
+        <div class="role">Collaborator</div>
+        <div class="name">Lea Püschel</div>
+        <div class="aff">Department of Gastroenterology, Hepatology, Infectious Diseases and Endocrinology, MHH</div>
+      </div>
+      <div class="person">
+        <div class="role">Collaborator</div>
+        <div class="name">Dr. Jan Voges</div>
+        <div class="aff">Institute of Information Processing, Leibniz University Hannover</div>
+      </div>
+      <div class="person">
+        <div class="role">Collaborator</div>
+        <div class="name">Diet School, MHH</div>
+        <div class="aff">Hannover Medical School</div>
+      </div>
+      <div class="person">
+        <div class="role">Patient organisation</div>
+        <div class="name">DCCV e.&nbsp;V.</div>
+        <div class="aff">German Crohn's and Colitis Association</div>
+      </div>
+      <div class="person">
+        <div class="role">Funding</div>
+        <div class="name">Joachim Herz Stiftung</div>
+        <div class="aff">Kick-Start Fund, 2025–2026</div>
+      </div>
+    </div>
+
+    <div class="note">
+      Questions about the project? Write to
+      <a href="mailto:Mattea.mueller@plri.de">Mattea.mueller@plri.de</a>.
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Enlarged app screen">
+  <button class="close" id="lbClose" aria-label="Close">&times;</button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<footer>
+  <div class="container">
+    <div class="socials">
+      <a href="mailto:Mattea.mueller@plri.de" title="Email"><i class="fas fa-envelope"></i></a>
+      <a href="https://orcid.org/0000-0002-3340-5122" target="_blank" rel="noopener" title="ORCID"><i class="fab fa-orcid"></i></a>
+      <a href="https://scholar.google.com/citations?user=YOUR_ID" target="_blank" rel="noopener" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+      <a href="https://github.com/" target="_blank" rel="noopener" title="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/" target="_blank" rel="noopener" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    </div>
+    <p>© <span id="yr"></span> Mattea Müller · <a href="index.html">back to home</a></p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  var lb = document.getElementById('lb'),
+      lbImg = document.getElementById('lbImg'),
+      lbClose = document.getElementById('lbClose'),
+      lastTrigger = null;
+
+  document.querySelectorAll('.shot').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      lastTrigger = btn;
+      lbImg.src = btn.dataset.full;
+      lbImg.alt = btn.querySelector('img').alt;
+      lb.classList.add('open');
+      lbClose.focus();
+    });
+  });
+
+  function closeLb(){
+    lb.classList.remove('open');
+    lbImg.src = '';
+    if(lastTrigger) lastTrigger.focus();
+  }
+  lbClose.addEventListener('click', closeLb);
+  lb.addEventListener('click', function(e){ if(e.target === lb) closeLb(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && lb.classList.contains('open')) closeLb();
+  });
+</script>
+
+</body>
+</html>
